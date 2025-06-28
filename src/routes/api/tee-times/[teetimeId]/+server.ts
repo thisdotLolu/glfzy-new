@@ -73,6 +73,8 @@ export async function DELETE({ cookies,params }) {
 
 	const { error } = await supabase.from('tee-times').delete().eq('id', teetimeId);
 
+    console.log(error)
+
 	if (error) {
 		return json({ error: error.message }, { status: 400 });
 	}

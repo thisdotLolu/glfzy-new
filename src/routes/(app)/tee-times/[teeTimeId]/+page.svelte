@@ -207,7 +207,7 @@ onMount(async () => {
 			accept="image/*" 
 		  />
 		  
-		  <!-- Custom button that triggers the file input -->
+		  
 		  <Button 
 		 class='h-[30px] ml-4' 
 		  on:click={triggerFileInput}>

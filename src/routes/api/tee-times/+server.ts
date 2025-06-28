@@ -40,6 +40,31 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
             return json({ error: error.message }, { status: 400 });
         }
 
+        if (data && data.length > 0) {
+        const teeTimeId = data[0].id;
+
+        console.log(teeTimeId)
+
+        console.log(players)
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const playerInserts = players.map((player:any) => ({
+        tee_time_id: teeTimeId,
+        player_id: player.id,
+        player_name: player.name,
+        player_email: player.email,
+    }));
+
+    const { error: playerInsertError } = await supabase
+        .from('tee_time_players')
+        .insert(playerInserts);
+
+    if (playerInsertError) {
+        console.error('Error inserting tee time players:', playerInsertError);
+        return json({ error: playerInsertError.message }, { status: 400 });
+    }
+}
+
         console.log(data)
 
 
@@ -51,12 +76,13 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 };
 
 
-export const GET: RequestHandler = async ({ cookies, url }) => {
+export const GET: RequestHandler = async ({ cookies}) => {
     const supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
         cookies: {
             get(key) {
                 return cookies.get(key) || '';
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             set(key, value, options: any) {
                 cookies.set(key, value, options);
             }
@@ -74,7 +100,6 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
         const userId = session.user.id;
         const userEmail = session.user.email;
         
-        // Get tee times created by the user
         const { data: createdTeeTimes, error: createdError } = await supabase
             .from('tee-times')
             .select('*')
@@ -83,7 +108,6 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
 
         if (createdError) throw createdError;
         
-        // Get tee times where the user is a player (using email)
         const { data: playerTeeTimes, error: playerError } = await supabase
             .from('tee_time_players')
             .select(`
@@ -109,29 +133,24 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
                 player_score: item.score
             }));
             
-        // Add flag to indicate these are tee times the user created
         const createdTeeTimesWithFlag = createdTeeTimes.map(item => ({
             ...item,
             as_creator: true
         }));
         
-        // Combine both sets of tee times
+
         const allTeeTimes = [...createdTeeTimesWithFlag];
         
-        // Add player tee times that weren't already included (avoid duplicates)
         playerTeeTimesData.forEach(playerTeeTime => {
             const existingIndex = allTeeTimes.findIndex(tt => tt.id === playerTeeTime.id);
             if (existingIndex >= 0) {
-                // If it exists, just add the player flag
                 allTeeTimes[existingIndex].as_player = true;
                 allTeeTimes[existingIndex].player_score = playerTeeTime.player_score;
             } else {
-                // If it doesn't exist, add it to the array
                 allTeeTimes.push(playerTeeTime);
             }
         });
         
-        // Sort by date (most recent first)
         allTeeTimes.sort((a, b) => {
             const dateA = new Date(a.created_at);
             const dateB = new Date(b.created_at);

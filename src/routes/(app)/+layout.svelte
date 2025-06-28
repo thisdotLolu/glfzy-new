@@ -11,38 +11,35 @@
 	import Breadcrumbs from './components/breadcrumbs.svelte';
 	import NavLink from './components/nav-link.svelte';
 	import { Clock, Flag, UsersRound } from 'lucide-svelte';
-	import { Toaster} from 'svelte-sonner'
+	import { Toaster } from 'svelte-sonner';
 
 	export let data;
 
 	const navLinks = [
 		{
-			name:"Dashboard",
-			path:'/dashboard',
-			icon: Home
+			name: 'Dashboard',
+			path: '/dashboard',
+			icon: Home,
 		},
 		{
-			name:"Groups",
-			path:'/groups',
-			icon: UsersRound
+			name: 'Groups',
+			path: '/groups',
+			icon: UsersRound,
 		},
 		{
-			name:"Tee Times",
-			path:'/tee-times',
-			icon: Clock
+			name: 'Tee Times',
+			path: '/tee-times',
+			icon: Clock,
 		},
 		{
-			name:'Courses',
-			path:'/courses',
-			icon: Flag
-		}
-	]
+			name: 'Courses',
+			path: '/courses',
+			icon: Flag,
+		},
+	];
 </script>
 
-<Toaster
-richColors
-position="top-right" 
-/>
+<Toaster richColors position="top-right" />
 <div class="flex min-h-screen w-full flex-col bg-muted/40">
 	<aside
 		class="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex"
@@ -52,28 +49,29 @@ position="top-right"
 				href="/"
 				class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 md:h-8 md:w-8"
 			>
-				<Logo />
+				<!-- <Logo />
+				  -->
+				<Logo/>
 				<span class="sr-only">Glfzy</span>
 			</a>
-			{#each navLinks as {name,path,icon:Icon}}
-			<Tooltip.Root>
-				<Tooltip.Trigger asChild let:builder>
-					<NavLink
-						href={path}
-						class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-						activeClass="bg-accent text-accent-foreground"
-						{builder}
-					>
-						<Icon class="h-5 w-5" />
-						<span class="sr-only">{name}</span>
-					</NavLink>
-				</Tooltip.Trigger>
-				<Tooltip.Content side="right">{name}</Tooltip.Content>
-			</Tooltip.Root>
+			{#each navLinks as { name, path, icon: Icon }}
+				<Tooltip.Root>
+					<Tooltip.Trigger asChild let:builder>
+						<NavLink
+							href={path}
+							class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+							activeClass="bg-accent text-accent-foreground"
+							{builder}
+						>
+							<Icon class="h-5 w-5" />
+							<span class="sr-only">{name}</span>
+						</NavLink>
+					</Tooltip.Trigger>
+					<Tooltip.Content side="right">{name}</Tooltip.Content>
+				</Tooltip.Root>
 			{/each}
 		</nav>
 		<nav class="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-			
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<NavLink
@@ -112,8 +110,7 @@ position="top-right"
 							href="##"
 							class="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
 						>
-							<Logo />
-							<span class="sr-only">SaaS Kit</span>
+							<Logo/>
 						</a>
 						<a
 							href="/dashboard"
@@ -144,8 +141,8 @@ position="top-right"
 							Courses
 						</a>
 						<a
-						href="/settings"
-						class="flex h-9 items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							href="/settings"
+							class="flex h-9 items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
 						>
 							<Settings class="h-5 w-5" />
 							<span class="">Settings</span>

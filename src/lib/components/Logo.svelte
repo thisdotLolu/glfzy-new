@@ -1,10 +1,9 @@
 <script lang="ts">
-	import img from '/images/logo@512.png'
 </script>
 
 
 <img
-class='h-[150px] w-[150px] object-contain'
-src={img}
+class='h-[200px] w-[200px] object-contain'
+src={'/images/glfzy.png'}
 alt='logo'
 />

@@ -229,8 +229,8 @@ onMount(async () => {
 			{:else}
 			<p class='my-4'>No Score Card Upload</p>
 			{/if}
-			<p class='text-muted-foreground text-[1.1rem] mt-5 font-medium'>{teeTime.group_name} </p>
-			<p class='text-[1.4rem] font-medium my-4'>Tee Time creator says: {teeTime.description}</p>
+			<p class='text-muted-foreground text-[1.4rem] mt-5'>{teeTime.group_name} </p>
+			<p class='text-[1.2rem] font-medium my-4'>Tee Time creator says: {teeTime.description}</p>
 
 			<h2 class="text-2xl font-semibold mt-10">Players & Scores</h2>
 			<Table.Root>

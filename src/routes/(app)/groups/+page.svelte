@@ -92,7 +92,6 @@ import { onMount } from 'svelte';
             <Tabs.Root value="group" class="w-full">
                 <Tabs.List>
                   <Tabs.Trigger value="group">Groups</Tabs.Trigger>
-                  <Tabs.Trigger value="member-requests">Group Timeline</Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content 
                 class='!w-full'

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Badge from '$lib/components/ui/badge/badge.svelte';
-import { Link } from '$lib/components/ui/breadcrumb';
+	import { Link } from '$lib/components/ui/breadcrumb';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import { ChevronRight } from 'lucide-svelte';
@@ -9,13 +9,33 @@ import { Link } from '$lib/components/ui/breadcrumb';
 	import { userStore } from '$lib/stores/userStore';
 	import SubscriptionAlert from './components/subscription-alert.svelte';
 	$: ({ userData} = $userStore);
+	
 	let showSubscriptionAlert:boolean=false;
+
+	let stats = {
+	totalTeeTimes: 0,
+	activeGroups: 0,
+	upcomingTeeTimes: 0,
+	averageGroupSize: '0',
+};
 	
 	let recentCourses:{
 		name:string, address:string, holes:number, lng:string,lat:string
 	}[] = [];
 
 	$:console.log(userData)
+
+	const fetchStats=async()=>{
+		try {
+		const res = await fetch('/api/stats-count');
+		if (res.ok) {
+			stats = await res.json();
+			console.log(stats)
+		}
+	} catch (err) {
+		console.error('Error fetching dashboard stats', err);
+	}
+	}
 
 	
 	onMount(async () => {
@@ -28,8 +48,8 @@ import { Link } from '$lib/components/ui/breadcrumb';
 			if (expiryDate < currentDate) {
 				showSubscriptionAlert = true;
 			}
-		}
-
+	}
+	fetchStats()
 	try {
 		const res = await fetch('/api/courses');
 		if (res.ok) {
@@ -83,25 +103,25 @@ import { Link } from '$lib/components/ui/breadcrumb';
 		  <div class="flex lg:flex-row flex-col gap-4 w-full">
 			<StatisticCard 
 			  title="Total Tee Times" 
-			  content={0} 
+			  content={stats.totalTeeTimes} 
 			  className="lg:w-[25%] w-full" 
 			/>
 		  
 			<StatisticCard 
 			  title="Active Groups" 
-			  content={0} 
+			  content={stats.activeGroups} 
 			  className="lg:w-[25%] w-full"
 			/>
 		  
 			<StatisticCard 
 			  title="Upcoming Tee Times" 
-			  content={0} 
+			  content={stats.upcomingTeeTimes} 
 			  className="lg:w-[25%] w-full"
 			/>
 		  
 			<StatisticCard 
 			  title="Average Group Size" 
-			  content={0} 
+			  content={Math.floor(Number(stats.averageGroupSize))} 
 			  className="lg:w-[25%] w-full"
 			/>
 		  </div>

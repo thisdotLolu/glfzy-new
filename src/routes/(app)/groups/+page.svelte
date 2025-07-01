@@ -9,7 +9,6 @@
         owner_id: string;
     }
 
-    // Export the function from module context
     export const fetchGroups = async (): Promise<Groups[]> => {
         try {
             const response = await fetch('/api/groups', {
@@ -61,11 +60,13 @@
 
 
     const loadGroups = async () => {
+        loading = true;
         try {
             groups = await fetchGroups();
         } catch (err) {
             console.log(err)
         }
+        loading = false
     };
 
     onMount(async () => {

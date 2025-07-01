@@ -181,10 +181,10 @@
 
     {#if groupData.owner_id === userData?.user_id}
 		<div class="w-full items-center flex gap-2 mt-[20px]">
-			<Button>
+			<!-- <Button>
 				<svelte:component this={Forward} />
 				Invite
-			</Button>
+			</Button> -->
 			<AddMember {showDialog} />
 			<AddCourse 
       courseList={courseList}

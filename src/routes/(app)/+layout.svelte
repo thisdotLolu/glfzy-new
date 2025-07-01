@@ -74,7 +74,7 @@
 				</Tooltip.Root>
 			{/each}
 		</nav>
-		<nav class="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+		<!-- <nav class="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<NavLink
@@ -89,7 +89,7 @@
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Settings</Tooltip.Content>
 			</Tooltip.Root>
-		</nav>
+		</nav> -->
 	</aside>
 	<div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
 		<header
@@ -153,14 +153,14 @@
 							<Flag class="h-5 w-5" />
 							Courses
 						</a>
-						<a
+						<!-- <a
 							href="/settings"
 							class="flex h-9 items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
 							on:click={()=>sheetOpen=false}
 						>
 							<Settings class="h-5 w-5" />
 							<span class="">Settings</span>
-						</a>
+						</a> -->
 					</nav>
 				</Sheet.Content>
 			</Sheet.Root>

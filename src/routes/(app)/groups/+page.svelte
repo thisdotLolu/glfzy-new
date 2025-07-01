@@ -25,7 +25,7 @@ import { onMount } from 'svelte';
 
     $: console.log("userdata", userData);
 
-    onMount(async () => {
+    export const fetchGroups =async()=>{
         try {
             const response = await fetch('/api/groups', {
                 method: 'GET',
@@ -45,6 +45,10 @@ import { onMount } from 'svelte';
             toast.error("Can't Fetch data")
             console.error(err);
         }
+    }
+
+    onMount(async () => {
+        fetchGroups()
     });
 </script>
 
@@ -63,16 +67,16 @@ import { onMount } from 'svelte';
             <!-- <p>{error.message}</p> -->
         </div>
     {:else}
-        <div class="w-full flex gap-3">
+        <div class="w-full flex lg:flex-nowrap flex-wrap gap-3">
             <StatisticCard
                 title='Your Groups'
-                className='w-[50%]'
+                className='lg:w-[50%] w-full'
                 content={groups.length}
             />
             {#each groups as group}
             <StatisticCard
                 title={group.name}
-                className='bg-[#289541] w-[50%]'
+                className='bg-[#289541] lg:w-[50%] w-full'
                 contentClass='text-[.9rem] !text-[#ffff]'
                 icon={UsersRound}
                 iconClassName='text-[#1a6d3b] text-[3rem]'

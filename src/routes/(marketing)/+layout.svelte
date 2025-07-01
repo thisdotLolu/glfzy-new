@@ -151,7 +151,7 @@
 										Dashboard
 									</Button>
 								</li>
-								<li>
+								<!-- <li>
 									<Button
 										href="/settings"
 										variant="ghost"
@@ -159,7 +159,7 @@
 									>
 										Settings
 									</Button>
-								</li>
+								</li> -->
 								<li>
 									<Button
 										href="/log-out"

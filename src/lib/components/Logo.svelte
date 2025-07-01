@@ -3,7 +3,7 @@
 
 
 <img
-class='h-[200px] w-[200px] object-contain'
+class='h-[100px] w-[50px] object-cover'
 src={'/images/glfzy.png'}
 alt='logo'
 />

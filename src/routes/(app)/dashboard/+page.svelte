@@ -132,7 +132,7 @@
 			</Card.Header>
 			<div class="w-full flex items-center">
 				<Card.Content class="w-full">
-					<div class="flex w-full justify-between border-b py-1">
+					<div class="lg:text-[1rem] text-[.8rem] flex w-full justify-between border-b py-1">
 						<p>Recent Courses Added</p>
 						<Link class="hover:underline" href="/courses">
 							View All Courses >
@@ -181,9 +181,9 @@
 			</Card.Header>
 			<div class="w-full flex items-center">
 				<Card.Content class="w-[100%] p-1 px-6">
-					<div class="flex w-full justify-between border-b pb-1">
+					<div class="flex w-full lg:text-[1rem] text-[.8rem] justify-between border-b pb-1">
 						<p>Recent Tee Times</p>
-						<Link class="hover:underline" href="/courses">
+						<Link class="lg:text-[1rem] text-[.8rem] hover:underline" href="/courses">
 							See Your Tee Times >
 						</Link>
 					</div>
@@ -226,7 +226,7 @@
 						</Card.Root>
 					{/each}
 					{/if}
-					 {#if loading === false && recentCourses.length < 1 }
+					 {#if loading === false && recentTeeTimes.length < 1 }
 					  <p>no tee times available</p>
 					 {/if}
 				</Card.Content>

@@ -14,6 +14,7 @@
 	import { Toaster } from 'svelte-sonner';
 
 	export let data;
+	let sheetOpen = false;
 
 	const navLinks = [
 		{
@@ -94,7 +95,9 @@
 		<header
 			class="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
 		>
-			<Sheet.Root>
+			<Sheet.Root
+			bind:open={sheetOpen}
+			>
 				<Sheet.Trigger asChild let:builder>
 					<Button
 						builders={[builder]}
@@ -121,6 +124,7 @@
 						<a
 							href="/dashboard"
 							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							on:click={()=>sheetOpen=false}
 						>
 							<Home class="h-5 w-5" />
 							Dashboard
@@ -128,6 +132,7 @@
 						<a
 							href="/groups"
 							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							on:click={()=>sheetOpen=false}
 						>
 							<UsersRound class="h-5 w-5" />
 							Groups
@@ -135,6 +140,7 @@
 						<a
 							href="/tee-times"
 							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							on:click={()=>sheetOpen=false}
 						>
 							<Clock class="h-5 w-5" />
 							Tee Times
@@ -142,6 +148,7 @@
 						<a
 							href="/courses"
 							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							on:click={()=>sheetOpen=false}
 						>
 							<Flag class="h-5 w-5" />
 							Courses
@@ -149,6 +156,7 @@
 						<a
 							href="/settings"
 							class="flex h-9 items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							on:click={()=>sheetOpen=false}
 						>
 							<Settings class="h-5 w-5" />
 							<span class="">Settings</span>

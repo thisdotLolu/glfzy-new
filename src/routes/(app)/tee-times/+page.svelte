@@ -117,7 +117,9 @@
 
         <div class='mt-[40px] w-full'>
             <p class='text-[1.5rem] font-semibold'>Created Tee Times</p>
-            <Table.Root>
+            <Table.Root
+            class='lg:w-full w-[750px]'
+            >
                 <Table.Caption>A list of your created Tee Times</Table.Caption>
                 <Table.Header>
                     <Table.Row>

@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     });
 
     try {
-        const {group_id,date,time, description, players,group_name,creator_id} = await request.json();
+        const {group_id,date,time, description, players,group_name,creator_id,creator_name} = await request.json();
 
         const memberData = {
             group_id,
@@ -27,6 +27,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
             players,
             group_name,
             creator_id,
+            creator_name
         }; 
 
 

@@ -6,6 +6,7 @@
 	import { Edit, Plus } from "lucide-svelte";
 	import { toast } from "svelte-sonner";
 	import * as Select from "$lib/components/ui/select";
+	import Label from "$lib/components/ui/label/label.svelte";
     $: ({ userData } = $userStore);
 
     interface Groups{
@@ -197,6 +198,7 @@
 					class="w-full"
 				/>
 				<div>
+                    <p class="text-[.7rem] mb-1">Number of Members</p>
 					<Select.Root
 					bind:selected
 					>

@@ -49,9 +49,11 @@
 				href="/"
 				class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 md:h-8 md:w-8"
 			>
-				<!-- <Logo />
-				  -->
-				<Logo/>
+				<img
+				class="h-[50px] w-[50px] object-cover"
+				src={'/images/glfzy.png'}
+				alt="logo"
+							/>
 				<span class="sr-only">Glfzy</span>
 			</a>
 			{#each navLinks as { name, path, icon: Icon }}
@@ -108,9 +110,13 @@
 					<nav class="grid gap-6 text-lg font-medium">
 						<a
 							href="##"
-							class="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+							class="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:text-base ml-5"
 						>
-							<Logo/>
+							<img
+								class="h-[100px] w-[100px] object-cover"
+								src={'/images/glfzy.png'}
+								alt="logo"
+							/>
 						</a>
 						<a
 							href="/dashboard"

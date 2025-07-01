@@ -145,7 +145,8 @@
             group_name:selectedGroup.label,
 			players: selectedMembers,
             creator_id:userData?.user_id,
-            date:teeTimeDate
+            date:teeTimeDate,
+			creator_name:userData?.name
 		};
 
 		try {

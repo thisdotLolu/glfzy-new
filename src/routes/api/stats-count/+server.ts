@@ -3,6 +3,35 @@ import { createServerClient } from '@supabase/ssr';
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import type { RequestHandler } from './$types';
 
+function parseCustomDate(dateStr: string, timeStr?: string): Date {
+	const [day, month, year] = dateStr.split('-').map(Number);
+
+	let hours = 0;
+	let minutes = 0;
+
+	if (timeStr) {
+		const cleaned = timeStr.trim().toLowerCase();
+		const ampmMatch = cleaned.match(/^(\d{1,2}):(\d{2})\s?(am|pm)$/i);
+		if (ampmMatch) {
+			hours = parseInt(ampmMatch[1], 10);
+			minutes = parseInt(ampmMatch[2], 10);
+			const period = ampmMatch[3];
+
+			if (period === 'pm' && hours < 12) hours += 12;
+			if (period === 'am' && hours === 12) hours = 0;
+		} else {
+			const [h, m] = cleaned.split(':').map(Number);
+			if (!isNaN(h) && !isNaN(m)) {
+				hours = h;
+				minutes = m;
+			}
+		}
+	}
+
+	return new Date(year, month - 1, day, hours, minutes);
+}
+
+
 export const GET: RequestHandler = async ({ cookies }) => {
 	const supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
 		cookies: {
@@ -28,10 +57,20 @@ export const GET: RequestHandler = async ({ cookies }) => {
 			.select('date')
 			.eq('creator_id', userId);
 
+		console.log(upcomingTeeTimesData)
+
 		const upcomingTeeTimes = upcomingTeeTimesData?.filter(tt => {
-			const date = new Date(tt.date);
+			const date = parseCustomDate(tt.date);
+			console.log(date)
 			return date.getTime() > Date.now();
 		}).length || 0;
+
+		const pastTeeTimes = upcomingTeeTimesData?.filter(tt => {
+			const date = parseCustomDate(tt.date);
+			console.log(Date.now())
+			return date.getTime() < Date.now();
+		}).length || 0;
+		
 
 		const { data: userGroups, error: groupError } = await supabase
 			.from('groups')
@@ -61,11 +100,15 @@ export const GET: RequestHandler = async ({ cookies }) => {
 			.select('id', { count: 'exact', head: true })
 			.eq('owner_id', userId);
 
+
+		console.log('pst',pastTeeTimes)
+
 		return json({
 			totalTeeTimes,
 			activeGroups,
 			upcomingTeeTimes,
 			averageGroupSize,
+			pastTeeTimes
 		});
 	} catch (err) {
 		console.error('Error getting dashboard stats:', err);

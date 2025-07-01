@@ -18,13 +18,39 @@
         creator_id:string
     }
 
+    let stats = {
+		totalTeeTimes: 0,
+		activeGroups: 0,
+		upcomingTeeTimes: 0,
+		averageGroupSize: '0',
+        pastTeeTimes:0
+	};
+
 
     $: ({ loading, error } = $userStore);
     let showDialog = false;
     let creatorTeeTimes:TeeTimes[] = []
 
+    $:console.log(stats)
+
+    const fetchStats = async () => {
+		loading = true;
+		try {
+			const res = await fetch('/api/stats-count');
+			if (res.ok) {
+                console.log(res)
+				stats = await res.json();
+				console.log(stats);
+			}
+		} catch (err) {
+			console.error('Error fetching dashboard stats', err);
+		}
+		loading=false;
+	};
+
 
 	onMount(async () => {
+    fetchStats()
 		try {
 			const response = await fetch('/api/tee-times', {
 				method: 'GET',
@@ -41,7 +67,9 @@
 			toast.error("Can't Fetch Data");
 			console.error(err);
 		}
+    fetchStats();
 	});
+
 
 </script>
 
@@ -63,13 +91,14 @@
             <StatisticCard
                 title='Past Tee Times'
                 className='w-[50%]'
-                content={0}
+                content={stats.pastTeeTimes}
             />
             <StatisticCard
                 title='Upcoming Tee Times'
                 className='bg-[#289541] w-[50%]'
                 contentClass='!text-[#ffff]'
                 iconClassName='text-[#1a6d3b] text-[3rem]'
+                content={stats.upcomingTeeTimes}
             />
         </div>
 

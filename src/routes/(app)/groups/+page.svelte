@@ -73,9 +73,10 @@ import { onMount } from 'svelte';
             <StatisticCard
                 title={group.name}
                 className='bg-[#289541] w-[50%]'
-                contentClass='!text-[#ffff]'
+                contentClass='text-[.9rem] !text-[#ffff]'
                 icon={UsersRound}
                 iconClassName='text-[#1a6d3b] text-[3rem]'
+                content={'Max Members - ' + group.no_of_players}
             />
             {/each}
         </div>
@@ -102,7 +103,7 @@ import { onMount } from 'svelte';
                             <Table.Row>
                                 <Table.Head>Name</Table.Head>
                                 <Table.Head>Description</Table.Head>
-                                <Table.Head>Players</Table.Head>
+                                <Table.Head>Max Players</Table.Head>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>

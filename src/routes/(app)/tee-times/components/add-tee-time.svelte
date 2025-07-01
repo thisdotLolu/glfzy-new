@@ -191,7 +191,7 @@
 			Create New Tee Time
 		</Button>
 	</Dialog.Trigger>
-	<Dialog.Content>
+	<Dialog.Content class='lg:w-full w-[95vw]'>
 		<Dialog.Header>
 			<Dialog.Title>Create a new Tee Time</Dialog.Title>
 			<!-- <Dialog.Description>

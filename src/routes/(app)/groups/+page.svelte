@@ -59,7 +59,7 @@
 
     $: console.log("userdata", userData);
 
-    
+
     const loadGroups = async () => {
         try {
             groups = await fetchGroups();
@@ -120,7 +120,7 @@
                 <Tabs.Content 
                 class='!w-full'
                 value="group">
-                    <Table.Root>
+                    <Table.Root class='lg:w-full w-[700px]'>
                         <Table.Caption>A list of your groups.</Table.Caption>
                         <Table.Header>
                             <Table.Row>
@@ -140,6 +140,7 @@
                                     <Table.Cell class="font-medium">{group.name}</Table.Cell>
                                     <Table.Cell>{group.description}</Table.Cell>
                                     <Table.Cell>{group.no_of_players}</Table.Cell>
+                                    {#if group.owner_id === userData?.user_id}
                                     <Table.Head class='cursor-pointer w-[20px]'> 
                                         <button on:click|stopPropagation>
                                             <AddGroup
@@ -154,6 +155,7 @@
                                                 on:groupUpdated={loadGroups} />
                                         </button>
                                     </Table.Head>
+                                    {/if}
                                 </Table.Row>
                             {/each}
                         </Table.Body>

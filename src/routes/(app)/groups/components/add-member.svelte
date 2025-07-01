@@ -116,6 +116,7 @@
         console.error("Unexpected error:", error);
         toast.error("An unexpected error occurred.");
     }
+    window.location.reload()
 }
 
 </script>
@@ -130,7 +131,7 @@
 		</Button>
 	</Dialog.Trigger>
 
-	<Dialog.Content class="">
+	<Dialog.Content class="lg:w-full w-[95vw]">
 		<Dialog.Header>
 			<Dialog.Title>Add a new member</Dialog.Title>
 			<Dialog.Description>

@@ -214,10 +214,10 @@
 							<Table.Cell>{member?.role}</Table.Cell>
 							{#if groupData.owner_id === userData?.user_id}
 							<Table.Head>
-								<button
-									class="bg-red-500 text-white px-3 py-1 rounded"
+								<button 
+								    disabled={ member?.role === 'owner' || isDeleting}
+									class="bg-red-500 text-white px-3 py-1 rounded disabled:opacity-20"
 									on:click={() => deleteMember(member.members.email)}
-									disabled={isDeleting}
 								>
 									{#if isDeleting}
 										Deleting...
@@ -225,6 +225,7 @@
 									{!isDeleting && 'Remove'}
 								</button>
 							</Table.Head>
+						
 							{/if}
 						</Table.Row>
 					{/each}

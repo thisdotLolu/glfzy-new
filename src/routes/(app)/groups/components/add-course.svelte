@@ -76,7 +76,7 @@
 			<Link size={20} /> &nbsp; {`  `} Link Course
 		</Button></Dialog.Trigger
 	>
-	<Dialog.Content class="sm:max-w-[425px]">
+	<Dialog.Content class="sm:max-w-[425px] lg:w-full w-[95vw]">
 		<Dialog.Header>
 			<Dialog.Title>Add a course</Dialog.Title>
 			<Dialog.Description>

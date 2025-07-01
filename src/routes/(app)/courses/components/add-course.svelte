@@ -73,6 +73,7 @@
 		}
 
 		showDialog = false;
+		window.location.reload();
 	}
 </script>
 
@@ -86,7 +87,7 @@
 			Save Course
 		</Button>
 	</Dialog.Trigger>
-	<Dialog.Content class="">
+	<Dialog.Content class="lg:w-full w-[95vw]">
 		<Dialog.Header>
 			<Dialog.Title>Confirm Location Details</Dialog.Title>
 			<Dialog.Description>

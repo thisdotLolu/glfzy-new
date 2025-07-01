@@ -39,7 +39,7 @@
 						Delete Account
 					</Button>
 				</Dialog.Trigger>
-				<Dialog.Content class="border-destructive">
+				<Dialog.Content class="border-destructive lg:w-full w-[95vw]">
 					<Dialog.Header>
 						<Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
 						<Dialog.Description>

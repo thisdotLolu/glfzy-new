@@ -45,6 +45,7 @@
 			console.log(err);
 			toast.error('Unexpected error occurred');
 		}
+		window.location.reload();
 	}
 </script>
 
@@ -55,7 +56,7 @@
 		</Button>
 	</Dialog.Trigger>
 
-	<Dialog.Content class="sm:max-w-[425px]">
+	<Dialog.Content class="sm:max-w-[425px] lg:w-full w-[95vw]">
 		<Dialog.Header>
 			<Dialog.Title>Submit Score</Dialog.Title>
 			<Dialog.Description>Select Player and Enter Score</Dialog.Description>

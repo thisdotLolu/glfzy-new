@@ -98,7 +98,6 @@
 
         const groupResult = await groupResponse.json();
         console.log("Group saved:", groupResult);
-        console.log("Group saved:", groupResult.data.id);
 
         if (!edit && groupResult.data) {
             const addMemberResponse = await fetch('/api/members', {
@@ -155,6 +154,7 @@
         console.error("Unexpected error:", error);
         toast.error("An unexpected error occurred.");
     }
+    window.location.reload()
 }
 
 
@@ -175,7 +175,7 @@
 			{/if}	
 			</Button>
 		</Dialog.Trigger>
-		<Dialog.Content class="">
+		<Dialog.Content class="lg:w-full w-[95vw]">
 			<Dialog.Header>
 				<Dialog.Title>Create a new Group</Dialog.Title>
 				<Dialog.Description>

@@ -6,7 +6,7 @@
 	import { Edit, Plus } from "lucide-svelte";
 	import { toast } from "svelte-sonner";
 	import * as Select from "$lib/components/ui/select";
-	import Label from "$lib/components/ui/label/label.svelte";
+    import {fetchGroups} from '../+page.svelte'
     $: ({ userData } = $userStore);
 
     interface Groups{
@@ -17,8 +17,6 @@
         owner_id:string
     }
     
-
-
 	export let showDialog: boolean;
 	export let groupsLength:number;
 	export let edit:boolean = false;
@@ -150,9 +148,9 @@
 
             console.log("Owner added to the group-members table.");
         }
-
         toast.success("Group saved successfully!");
         showDialog = false;
+        fetchGroups()
     } catch (error) {
         console.error("Unexpected error:", error);
         toast.error("An unexpected error occurred.");

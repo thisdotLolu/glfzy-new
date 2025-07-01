@@ -1,31 +1,16 @@
-<script lang='ts' >
-import { onMount } from 'svelte';
-    import { UsersRound } from 'lucide-svelte';
-    import StatisticCard from '../components/statistic-card.svelte';
-    import * as Table from "$lib/components/ui/table";
-    import { userStore } from '$lib/stores/userStore';
-	import { toast } from 'svelte-sonner';
-	import { goto } from '$app/navigation';
-	import AddGroup from './components/add-group.svelte';
-    import * as Tabs from "$lib/components/ui/tabs";
-    $: ({ userData, loading, error } = $userStore);
-
-    interface Groups{
-        name:string;
-        description:string;
-        no_of_players:number;
-        id:number;
-        owner_id:string
-    }
+<script context='module' lang='ts'>
+    import { toast } from 'svelte-sonner';
     
+    interface Groups {
+        name: string;
+        description: string;
+        no_of_players: number;
+        id: number;
+        owner_id: string;
+    }
 
-    let groups:Groups[] = [];
-    let showDialog = false;
-
-
-    $: console.log("userdata", userData);
-
-    export const fetchGroups =async()=>{
+    // Export the function from module context
+    export const fetchGroups = async (): Promise<Groups[]> => {
         try {
             const response = await fetch('/api/groups', {
                 method: 'GET',
@@ -36,23 +21,57 @@ import { onMount } from 'svelte';
 
             if (response.ok) {
                 const result = await response.json();
-                groups = result.groups;
+                return result.groups;
             } else {
-                error = await response.json();
+                const error = await response.json();
+                throw new Error(error.message || 'Failed to fetch groups');
             }
         } catch (err) {
-            // error = { message: 'Failed to fetch groups.' };
-            toast.error("Can't Fetch data")
+            toast.error("Can't Fetch data");
             console.error(err);
+            throw err;
         }
-    }
-
-    onMount(async () => {
-        fetchGroups()
-    });
+    };
 </script>
 
+<script lang='ts'>
+    import { onMount } from 'svelte';
+    import { UsersRound } from 'lucide-svelte';
+    import StatisticCard from '../components/statistic-card.svelte';
+    import * as Table from "$lib/components/ui/table";
+    import { userStore } from '$lib/stores/userStore';
+    import { goto } from '$app/navigation';
+    import AddGroup from './components/add-group.svelte';
+    import * as Tabs from "$lib/components/ui/tabs";
+    
+    $: ({ userData, loading, error } = $userStore);
 
+    interface Groups {
+        name: string;
+        description: string;
+        no_of_players: number;
+        id: number;
+        owner_id: string;
+    }
+
+    let groups: Groups[] = [];
+    let showDialog = false;
+
+    $: console.log("userdata", userData);
+
+    
+    const loadGroups = async () => {
+        try {
+            groups = await fetchGroups();
+        } catch (err) {
+            console.log(err)
+        }
+    };
+
+    onMount(async () => {
+        loadGroups();
+    });
+</script>
 
 <div class='flex flex-col gap-5 w-full'>
     {#if loading}
@@ -87,10 +106,10 @@ import { onMount } from 'svelte';
 
         <div class="w-full flex items-center gap-2">
             <AddGroup
-            groups={groups}
-            groupsLength={groups.length}
-            {showDialog} />
-         
+                groups={groups}
+                groupsLength={groups.length}
+                {showDialog} 
+                on:groupAdded={loadGroups} />
         </div>
 
         <div class='mt-[40px] w-full'>
@@ -121,24 +140,19 @@ import { onMount } from 'svelte';
                                     <Table.Cell class="font-medium">{group.name}</Table.Cell>
                                     <Table.Cell>{group.description}</Table.Cell>
                                     <Table.Cell>{group.no_of_players}</Table.Cell>
-                                    <Table.Head
-                                    
-                                    class='cursor-pointer w-[20px]'
-                                    > 
-                                    <button
-                                    on:click|stopPropagation
-                                    >
-                                    <AddGroup
-                                    groups={groups}
-                                    existingGroupName={group.name}
-                                    existingGroupDesc={group.description}
-                                    existingGroupNo={group.no_of_players}
-                                    groupId={group.id}
-                                    edit={true}
-                                    groupsLength={groups.length}
-                                    {showDialog} />
-                                </button>
-                     
+                                    <Table.Head class='cursor-pointer w-[20px]'> 
+                                        <button on:click|stopPropagation>
+                                            <AddGroup
+                                                groups={groups}
+                                                existingGroupName={group.name}
+                                                existingGroupDesc={group.description}
+                                                existingGroupNo={group.no_of_players}
+                                                groupId={group.id}
+                                                edit={true}
+                                                groupsLength={groups.length}
+                                                {showDialog} 
+                                                on:groupUpdated={loadGroups} />
+                                        </button>
                                     </Table.Head>
                                 </Table.Row>
                             {/each}
@@ -146,7 +160,7 @@ import { onMount } from 'svelte';
                     </Table.Root>
                 </Tabs.Content>
                 <Tabs.Content value="password">Change your password here.</Tabs.Content>
-              </Tabs.Root>
+            </Tabs.Root>
         </div>
     {/if}
 </div>
